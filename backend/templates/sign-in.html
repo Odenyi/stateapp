@@ -1,0 +1,50 @@
+﻿{% extends 'signuplayout.html' %}
+{% load static %}
+{% block sigup %}
+
+<div class="page-header">
+     <!-- image background -->
+
+     {% include 'components/signupimage.html' %}
+     
+    <div class="container">
+        <div class="col-md-12 content-center">
+            <div class="card-plain">
+                <form class="form" method="POST" action="">
+                    {% csrf_token %}
+
+                    <div class="header">
+                        <div class="logo-container">
+                            <img src="{% static 'assets/images/logo.svg' %}" alt="">
+                        </div>
+                        <h5>Log in</h5>
+                    </div>
+                    <div class="content">  
+                        {% for message in messages %}
+                        <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}">
+                            {{ message }}
+                        </div>
+                        {% endfor %}                                              
+                        <div class="input-group input-lg">
+                            <input type="email" class="form-control" name="username" placeholder="Enter User Name(email)">
+                            <span class="input-group-addon">
+                                <i class="zmdi zmdi-account-circle"></i>
+                            </span>
+                        </div>
+                        
+                        <div class="input-group input-lg">
+                            <input type="password" placeholder="Password" name="password" class="form-control" />
+                            <span class="input-group-addon">
+                                <i class="zmdi zmdi-lock"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="footer text-center">
+                        <button type="submit" class="btn l-cyan btn-round btn-lg btn-block waves-effect waves-light">SIGN IN</button>
+                        <h6 class="m-t-20"><a href="#" class="link">Forgot Password?</a></h6>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

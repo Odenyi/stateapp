@@ -1,0 +1,4 @@
+{% for property_type_count in property_type_counts %}
+<li><a href="javascript:void(0);">{{ property_type_count.property_type__property_type }}</a> <span class="pull-right">({{ property_type_count.count }})</span>
+</li>
+{% endfor %}

@@ -1,0 +1,76 @@
+﻿{% extends 'components/layout.html'%}
+{% load static %}
+
+{% block mid_section%}
+<!-- main body -->
+
+<section class="content blog-page">
+    <div class="block-header">
+        <div class="row">
+            <div class="col-lg-7 col-md-6 col-sm-12">
+                <h2>New Post
+                    <small>Welcome to Estate App</small>
+                </h2>
+            </div>
+            <div class="col-lg-5 col-md-6 col-sm-12">
+                <ul class="breadcrumb float-md-right">
+                    {% include 'components/homelink.html' %}
+                    {% include 'components/bloglink.html' %}
+                    <li class="breadcrumb-item active">New Post</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+    <form  id="addblogfrm" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="body">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Enter Blog title" name="blogtitle" id="blogtitle" />
+                        </div>
+                        
+                        <select class="form-control show-tick" name="blogtype" id="blogtype">
+                            <option value="">Select Category --</option>
+                            {% for type in property_type %}
+                            <option value="{{ type.id }}">{{ type.property_type }}</option>
+                            {% endfor %}
+                            
+                        </select>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <textarea rows="4" class="form-control no-resize" placeholder="Blog Description" name="blogdescription" id="blogdescription" ></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row clearfix">                            
+                        <div class="col-sm-4">
+                                <div id="blogupload" class="dropzone m-b-20 m-t-20" method="post" data-url="{% url 'admin_addblog' %}"  data-fieldname="mainblogimage" >
+                                    <div class="dz-message">
+                                        <div class="drag-icon-cph"> <i class="material-icons">touch_app</i> </div>
+                                        <h3>Drop files here or click to upload.</h3>
+                                        <em>(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</em> </div>
+                                    <div class="fallback">
+                                        <input name="file" type="file" multiple />
+                                    </div>
+                                </div>  
+                        </div>
+                        </div>                      
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="body">
+                        
+                        <button type="submit" class="btn btn-primary btn-round waves-effect m-t-20">Post</button>
+                    </div>
+                </div>
+            </div>            
+        </div>
+    </form>
+    </div>
+</section>
+
+{% endblock %}

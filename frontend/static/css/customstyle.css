@@ -1,0 +1,28 @@
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    z-index: 9999;
+    
+}
+
+.popup.success {
+    background-color: #4CAF50; /* Green background for success messages */
+}
+
+.popup.error {
+    background-color: #F44336; /* Red background for error messages */
+}
+.responsive-image {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 aspect ratio (9 / 16 * 100%) */
+  }
+  

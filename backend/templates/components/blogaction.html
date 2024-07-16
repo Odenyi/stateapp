@@ -1,0 +1,5 @@
+<div class="property-action m-t-15">
+    <a href="{% url 'adminblog-edit' blog.id %}" title="Edit"><i class="zmdi zmdi-edit"></i></a>
+    <a href="{% url 'adminblog-details' blog.id %}" title="View"><i class="zmdi zmdi-eye"></i></a>
+    <a href="javascript:void(0)" class="remove-blog" data-id="deleteview1" data-url="{% url 'adminblog-delete' blog.id %}" data-name="{{ blog.title }}" title="Delete"><i class="zmdi zmdi-delete"></i></a>
+</div>

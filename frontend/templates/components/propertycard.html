@@ -1,0 +1,39 @@
+{% load humanize %}
+{% if properties %}
+{% for property in properties %}
+                <div class="col-md-4 col-sm-6">
+                    <div class="at-property-item at-col-default-mar animated fadeInUpShort slow">
+                        <div class="at-property-img">
+                            <img src="{{ property.main_image.url }}" alt="{{ property.title }}" class="img-fluid" style="height: 350px;">
+                            <div class="at-property-overlayer"></div>
+                            <a class="btn btn-default at-property-btn" href="{% url 'property_detail' id=property.id %}" role="button">View Details</a>
+                            {% if property.offer_type.offer_type|lower == "sale" or property.offer_type.offer_type|lower == "rent" %}
+                            <h4>For {{ property.offer_type.offer_type }} </h4>
+                            {% else %}
+                            <h4>{{ property.offer_type.offer_type }} </h4>
+                            {% endif %}
+                            <h5>KSH {{ property.price|intcomma }}</h5>
+                        </div>
+                        <div class="at-property-dis">
+                            <ul>
+                                
+                                <li><i class="fa fa-object-group" aria-hidden="true"></i> {{ property.propertyfeature.size}} sq ft</li>
+                               
+                                <li><i class="fa fa-bed" aria-hidden="true"></i> {{ property.propertyfeature.bedrooms }}</li>
+  
+                                <li><i class="fa fa-bath" aria-hidden="true"></i>{{ property.propertyfeature.bathrooms }}</li>
+                                
+                            </ul>
+                        </div>
+                        <div class="at-property-location">
+                            <h4><i class="fa fa-home" aria-hidden="true"></i><a href="{% url 'property_detail' id=property.id %}">{{ property.title }}</a></h4>
+                            <p><i class="fa fa-map-marker" aria-hidden="true"></i> {{ property.location.location_name }},{{ property.location.county.county_name}}</p>
+                        </div>
+                    </div>
+                </div>
+{% endfor %}
+{% else %}
+<div class="alert alert-warning">
+    <p style="text-align: center;"><strong>Sorry, no properties found.</strong></p>
+</div>
+{% endif %}

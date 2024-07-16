@@ -1,0 +1,70 @@
+{% extends 'components/layout.html'%}
+{% load static %}
+
+{% block mid_section%}
+{% load tz %}
+<section class="content home">
+    <div class="block-header">
+        <div class="row">
+            <div class="col-lg-7 col-md-6 col-sm-12">
+                <h2>Property List
+                <small class="text-muted">Welcome to Estate App</small>
+                </h2>
+            </div>
+            <div class="col-lg-5 col-md-6 col-sm-12">                
+                <a href="{% url 'user_list' %}" class="btn btn-primary btn-icon btn-round hidden-sm-down float-right m-l-10" style="display: flex; align-items: center; justify-content: center;">
+                    <i class="zmdi zmdi-plus"></i>
+                </a>
+                <ul class="breadcrumb float-md-right">
+                    {% include  'components/homelink.html' %}
+                    <li class="breadcrumb-item"><a href="javascript:void(0);">Users</a></li>
+                    <li class="breadcrumb-item active">List</li>
+                </ul>                
+            </div>
+        </div>
+    </div>
+    
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Photo</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for userview in users %}
+                <tr>
+                    <td class="username">{{ userview.get_full_name }}</td>
+                    <td>{{ userview.email }}</td>
+                    <td>
+                        {% if userview.photo %}
+                            <img src="{{ userview.photo.url }}" alt="{{ userview.get_full_name }}" width="50" height="50">
+                        {% else %}
+                            No Photo
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if userview.is_superuser %}
+                            Admin
+                        {% elif userview.is_staff %}
+                            Staff
+                        {% else %}
+                            Normal User
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'edit_user' userview.id %}" class="btn btn-primary">Edit</a>
+                        <a href="javascript:void(0);" class="btn btn-danger deleteUsr" data-delusr="{% url 'delete_user' userview.id %}"   data-userid = "{{ userview.id }}" data-loguser = "{{ user.id }}">Delete</a>
+                       
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</section>
+
+{% endblock %}

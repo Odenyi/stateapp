@@ -1,0 +1,44 @@
+
+{% extends 'layout.html' %} 
+
+<!-- load the static files -->
+{% load static %}
+   {% block bodysection %}
+      
+
+    <!-- Inner page heading start from here -->
+    <section id="at-inner-title-sec">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="at-inner-title-box">
+                        <h2>Properties</h2>
+                        <p>{% include 'components/homeurl.html' %} <a href="#">Properties</a>
+                        </p>
+                    </div>
+                </div>
+                <!-- <div class="col-md-6 col-sm-6">
+                    <img src="{% static 'images/title.png' %}" alt="">
+                </div> -->
+            </div>
+        </div>
+    </section>
+    <!-- Inner page heading end -->
+    {% include "components/propertyfilters.html" %}
+    <!-- Property start from here -->
+    <section class="at-property-sec">
+        <div class="container">
+            <div class="row">
+                <div class="row animatedParent animateOnce">
+                    <!-- add property card  -->
+                    {% include "components/propertycard.html" %}
+                </div>
+        
+                </div>
+                {% include "components/paginator.html" %}
+           
+        </div>
+    </section>
+    <!-- Property End -->
+
+   {% endblock %}

@@ -1,0 +1,141 @@
+{% extends 'layout.html' %} 
+
+<!-- load the static files -->
+{% load static %}
+{% block bodysection %}
+{% load tz %}
+
+
+    <!-- Inner page heading start from here -->
+    <section id="at-inner-title-sec">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="at-inner-title-box">
+                        <h2>Blog details</h2>
+                        <p>{% include 'components/homeurl.html' %}<a href="#">Blog</a>
+                        </p>
+                    </div>
+                </div>
+                <!-- <div class="col-md-6 col-sm-6">
+                    <img src="images/title.png" alt="">
+                </div> -->
+            </div>
+        </div>
+    </section>
+    <!-- Inner page heading end -->
+
+    <!-- Property start from here -->
+    <section class="at-blog-sec at-blog-details-sec">
+        <div class="container">
+            <div class="row animatedParent animateOnce">
+                <div class="col-lg-8">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="at-blog-box at-col-default-mar">
+                                <div class="at-blog-img at-blog-big-img">
+                                    <img src="{{ blog.image.url }}" alt="">
+                                    <div class="at-blog-date">
+                                        <ul>
+                                            {% include 'components/blogicons.html' %}
+                                        </ul>
+                                    </div>
+                                </div>
+                                <h4><a href="javascript:void();">{{ blog.title }}</a></h4>
+                                <p>{{ blog.description}}</p>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="at-comment-row">
+                                <h3><a href="#">Comment({{ messagecount }})</a></h3>
+                                {% for message in properties %}
+                                <div class="at-comment-item">
+                                    <a class="pull-right" href="#">
+                                        <i class="fa fa-reply" aria-hidden="true"></i>
+                                    </a>
+                                    <img src="{% static 'images/comment/person.jpeg' %}" alt="">
+                                    <h5>{{ message.username }}</h5>
+                                    <span>{{ message.created_at|timezone:"Africa/Nairobi" }}</span>
+                                    <p> {{ message.message }} </p>
+                                </div>
+                                {% endfor %}
+                                {% include "components/paginator.html" %}
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form class="contact_form" method="post" data-url = "{% url 'savecontactmessage'%}" action="" data-type = "blogcontact" data-blogid = "{{ blog.id }}">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6">
+                                        <input class="form-control" type="text" name="name" id="customername" placeholder="Your name" required>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6">
+                                        <input class="form-control" type="email" name="email" id="customeremail" placeholder="Email">
+                                    </div>
+                                    <div class="col-md-12 col-sm-12">
+                                        <textarea class="form-control" name="message" rows="5" id="customermessage" placeholder="Write a comment here"></textarea>
+                                        <button class="btn btn-default hvr-bounce-to-right" type="submit">SUBMIT</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="at-sidebar">
+                        <div class="at-sidebar-search at-sidebar-mar">
+                            <form method="post">
+                                <div class="input-group">
+                                    <input placeholder="Search Here....." class="form-control" name="search-field" type="text">
+                                    <span class="input-group-btn">
+                                  <button type="submit" class="btn"><i class="fa fa-search"></i></button>
+                                  </span>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="at-categories clearfix">
+                            <h3 class="at-sedebar-title">categories</h3>
+                            <ul>
+                                {% include 'components/property_typecount.html' %}
+                            </ul>
+                        </div>
+                        <div class="at-latest-news">
+                            <h3 class="at-sedebar-title">Other Blogs</h3>
+                            <ul>
+                                {% for random_blog in other_random_blogs %}
+                                <li>
+                                    
+                                <div class="at-news-item">
+                                    <img src="{{ random_blog.image.url }}" alt="">
+                                    <h4><a href="{% url 'blog-details' random_blog.id %}">{{ random_blog.title }}</a></h4>
+                                    {%  if random_blog.description|length > 30 %}
+                                    <p>{{ random_blog.description|slice:":30" }}...</p>
+                    
+                                    {% else %}
+                                    <p class="text-muted m-b-0">{{ random_blog.description }}</p>
+                                    {% endif %}
+                                </div>
+
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="at-sidebar-tags">
+                            {% for property_type_count in property_type_counts %}
+                            <a href="javascript:void();">{{ property_type_count.property_type__property_type }}</a>
+                           {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Property End -->
+
+{% endblock %} 

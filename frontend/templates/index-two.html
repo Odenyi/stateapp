@@ -1,0 +1,189 @@
+
+{% extends 'layout.html' %} 
+{% load humanize %}
+{% load tz %}
+<!-- load the static files -->
+{% load static %}
+   {% block bodysection %}
+      
+
+    <!-- Main Slider Start -->
+    <!-- <section class="main-slider-section">
+        <ul class="main-slider slide">
+            <li class="slide-item slide-item-bg-one">
+              <div class="slide-caption">
+                <p class="slide-caption-desc">Get your dream Home</p>
+                <h2 class="slide-caption-title">welcome to our <span>Homy</span></h2>
+                <a href="#" class="btn">Learn More</a>
+              </div>
+            </li>
+           <li class="slide-item slide-item-bg-two">
+              <div class="slide-caption">
+                <p class="slide-caption-desc">Get your dream Home</p>
+                <h2 class="slide-caption-title">We know your <span>dreams</span></h2>
+                <a href="#" class="btn">Learn More</a>
+              </div>
+            </li>
+            <li class="slide-item slide-item-bg-three">
+              <div class="slide-caption">
+                <p class="slide-caption-desc">Get your dream Home</p>
+                <h2 class="slide-caption-title">Get Awesome <span>interior</span> design</h2>
+                <a href="#" class="btn">Learn More</a>
+              </div>
+            </li>
+        </ul>
+    </section> -->
+    <!-- Main Slider End -->
+
+    <!-- Main Slider Start -->
+    <section class="main-slider-section">
+        <a class="yt-bg-video" data-property="{videoURL:'https://www.youtube.com/watch?v=oIABm5MGcSA',containment:'#welcome-video', showControls:false, autoPlay:true, mute:true, loop:true, startAt:0, quality:'default', opacity:1,}"></a>
+        <!-- Pogo Silder Start -->
+        <div class="pogoSlider" id="pogo-slider">
+            <div class="pogoSlider-slide" data-transition="fade" data-duration="1000" style="background-image:url({% static 'images/slider/1.jpg' %});">
+                <!-- Slider Elements -->
+                <div class="silder-elements container">
+                    <h2 class="pogoSlider-slide-element slider-main-title" data-in="slideUp" data-out="slideUp" data-duration="1000" data-delay="500">welcome to Estate App</h2>
+                    <p class="pogoSlider-slide-element slider-para" data-in="slideDown" data-out="slideDown" data-duration="1000" data-delay="500">All about Luxury Living and peace of mind while enjoying your return on investment.</p>
+                    <div class="pogoSlider-slide-element" data-in="expand" data-out="slideUp" data-duration="1000" data-delay="500">
+                        <a class="btn btn-primary theme-btn hvr-bounce-to-right" href="{% url 'properties' %}" role="button">Properties</a>
+                        <a class="btn btn-primary theme-btn hvr-bounce-to-right" href="{% url 'contact' %}" role="button">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+            <div class="pogoSlider-slide" data-transition="fade" data-duration="1000" style="background-image:url({% static 'images/slider/2.jpg' %});">
+                <!-- Slider Elements -->
+                <div class="silder-elements container">
+                    <h2 class="pogoSlider-slide-element slider-main-title" data-in="slideUp" data-out="slideUp" data-duration="1000" data-delay="500">Get your dream Home</h2>
+                    <p class="pogoSlider-slide-element slider-para" data-in="slideDown" data-out="slideDown" data-duration="1000" data-delay="500">Unlock the door to your great dream home with our expert guidance and unmatched listings, where your perfect property meets your every desire.</p>
+                    <div class="pogoSlider-slide-element" data-in="expand" data-out="slideUp" data-duration="1000" data-delay="500">
+                        <a class="btn btn-primary theme-btn hvr-bounce-to-right" href="{% url 'properties' %}" role="button">Properties</a>
+                        <a class="btn btn-primary theme-btn hvr-bounce-to-right" href="{% url 'contact' %}" role="button">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+            <div class="pogoSlider-slide" data-transition="fade" data-duration="1000" style="background-image:url({% static 'images/slider/3.jpg' %});">
+                <!-- Slider Elements -->
+                <div class="silder-elements container">
+                    <h2 class="pogoSlider-slide-element slider-main-title" data-in="slideUp" data-out="slideUp" data-duration="1000" data-delay="500">Get Awesome interior design</h2>
+                    <p class="pogoSlider-slide-element slider-para" data-in="slideDown" data-out="slideDown" data-duration="1000" data-delay="500">Transform your space and elevate your lifestyle with our expert touch – where awesome interior design meets your dreams.</p>
+                    <div class="pogoSlider-slide-element" data-in="expand" data-out="slideUp" data-duration="1000" data-delay="500">
+                        <a class="btn btn-primary theme-btn hvr-bounce-to-right" href="{% url 'properties' %}" role="button">Properties</a>
+                        <a class="btn btn-primary theme-btn hvr-bounce-to-right" href="{% url 'contact' %}" role="button">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Pogo Silder End -->
+    </section>
+
+   
+
+   
+
+    <!-- Call start from here -->
+    <section class="at-Call-sec jarallax at-over-layer-black">
+        <div class="at-Call-both-side clearfix">
+            <div class="at-Call-left">
+                <div class="at-inside-Call">
+                    <h5>BOOK YOUR</h5>
+
+                      <!-- TO ADD LINK TO BOOKING SYSTEM  -->
+                    <h2><a href="{% url 'fnapartments' %}" class="btn">FURNISHED APARTMENT!</a> </h2>
+
+                </div>
+            </div>
+            <div class="at-Call-right">
+                <div class="at-Call-right-inside">
+                    <h2>we are ready to receive your call</h2>
+                    <div class="at-short-line"></div>
+                    <h3><span>+254115206127</span></h3>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Call End -->
+    
+    {% include "components/propertyfilters.html" %}
+ 
+
+
+    <!-- Property start from here -->
+    <section class="at-property-sec">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="at-sec-title at-sec-title-left">
+                        <h2>Luxury<span>Property</span></h2>
+                        <div class="at-heading-under-line">
+                            <div class="at-heading-inside-line"></div>
+                        </div>
+                        <p>"Unlock the door to your great dream home with our expert guidance and unmatched listings, where your perfect property meets your every desire."</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row animatedParent animateOnce">
+                 <!--add card component  -->
+                 {% include "components/propertycard.html" %}
+
+                <div class="col-md-12 col-sm-12 text-center">
+                    {% include "components/paginator.html" %}
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Property End -->
+
+ 
+
+    <!-- Blog start from here -->
+    <section class="at-blog-sec">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="at-sec-title at-sec-title-left">
+                        <h2>Our <span>Blog</span></h2>
+                        <div class="at-heading-under-line">
+                            <div class="at-heading-inside-line"></div>
+                        </div>
+                        <p>Dive into a world of captivating blogs right here!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row animatedParent animateOnce">
+                {% if random_blogs %}
+                {% for blog in random_blogs%}
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="at-blog-box at-col-default-mar animated fadeInUpShort slow">
+                        <div class="at-blog-img">
+                            <img src="{{ blog.image.url }}" alt="" style="height: 300px;">
+                            <div class="at-blog-date">
+                                <ul>
+                                    <li><i class="icofont icofont-businessman"></i><a href="#">Estate</a>
+                                    </li>
+                                    <li><i class="icofont icofont-calendar"></i><a href="#">{{ blog.created_at|timezone:"Africa/Nairobi"  }}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="at-blog-content">
+                            <h4><a href="blog-details.html">{{ blog.title }}</a></h4>
+                                {% include 'components/blogdiscriptionslice.html' %}
+                            
+                            <a class="btn btn-default hvr-bounce-to-right" href="{% url 'blog-details' blog.id %}" role="button">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            {% else %}
+                <div class="alert alert-warning">
+                    <p style="text-align: center;"><strong>Sorry, no blogs found.</strong></p>
+                </div>
+            {% endif %}
+                
+            </div>
+        </div>
+    </section>
+    <!-- End -->
+
+{% endblock %}

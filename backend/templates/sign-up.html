@@ -1,0 +1,86 @@
+﻿{% extends 'signuplayout.html' %}
+{% load static %}
+{% block sigup %}
+<div class="page-header">
+    <!-- image background -->
+
+    {% include 'components/signupimage.html' %}
+    <div class="error-container">
+        {% if user_form.errors %}
+            <div class="alert alert-danger">
+                <strong>Oops! There was an error:</strong>
+                <ul>
+                    {% for error in user_form.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+    <div class="container">
+        <div class="col-md-12 content-center">
+            <div class="card-plain">
+                <form class="form" method="post">
+                    {% csrf_token %}
+                    <div class="header">
+                        <div class="logo-container">
+                            <img src="assets/images/logo.svg" alt="">
+                        </div>
+                        <h5>Sign Up</h5>
+                        <span>Register a new membership</span>
+                    </div>
+                    <div class="content">
+                       
+                            {% if form.errors %}
+                            <div class="alert alert-danger">
+                                <strong>Oops! There was an error:</strong>
+                                <ul>
+                                    {% for field, error in form.errors.items %}
+                                    <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            {% endif %}
+                          
+                        
+                     
+                        <div class="input-group">
+                            {{ form.email }}
+                            <span class="input-group-addon">
+                                <i class="zmdi zmdi-email"></i>
+                            </span>
+                        </div>
+                        <div class="input-group input-lg">
+                            {{ form.phone_number }}
+                            <span class="input-group-addon">
+                                <i class="zmdi zmdi-phone"></i>
+                            </span>
+                        </div>
+                        <div class="input-group">
+                            {{ form.password1 }}
+                            <span class="input-group-addon">
+                                <i class="zmdi zmdi-lock"></i>
+                            </span>
+                        </div>
+                        <div class="input-group">
+                            {{ form.password2 }}
+                            <span class="input-group-addon">
+                                <i class="zmdi zmdi-lock"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="checkbox">
+                        {{ form.terms_and_conditions }}
+                        <label for="terms">
+                            I read and agree to the <a href="javascript:void(0);">terms of usage</a>
+                        </label>
+                    </div>
+                    <div class="footer text-center">
+                        <button type="submit" class="btn l-cyan btn-round btn-lg btn-block waves-effect waves-light">SIGN UP</button>
+                        <h6 class="m-t-20"><a class="link" href="{% url 'signup' %}">You already have a membership?</a></h6>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}  

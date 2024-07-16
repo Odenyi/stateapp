@@ -1,0 +1,302 @@
+{% extends 'components/layout.html'%}
+{% load static %}
+
+{% block mid_section%}
+
+<!-- Main Content -->
+<section class="content home">
+    <div class="block-header">
+        <div class="row">
+            <div class="col-lg-7 col-md-6 col-sm-12">
+                <h2>Update Property
+                <small class="text-muted">Welcome to Estate App</small>
+                </h2>
+            </div>
+            <div class="col-lg-5 col-md-6 col-sm-12">                
+                <button class="btn btn-primary btn-icon btn-round hidden-sm-down float-right m-l-10" type="button">
+                    <i class="zmdi zmdi-plus"></i>
+                </button>
+                <ul class="breadcrumb float-md-right">
+                    {% include 'components/homelink.html' %}
+                    {% include 'components/propertylink.html' %}
+                    <li class="breadcrumb-item active">Update Property</li>
+                </ul>                
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+     <div class="row clearfix">
+        <div id="errorContainer" class="d-flex align-items-center justify-content-center"></div>
+        <form method="post" id="property_update" data-location-url="{% url 'ajax_load_location' %}" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            <div id="formMessages"></div>
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="header">
+                        <h2><strong>Basic</strong> Information <small>Description text here...</small> </h2>
+                        <ul class="header-dropdown m-r--5">
+                            <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="zmdi zmdi-more-vert"></i></a>
+                                <ul class="dropdown-menu pull-right">
+                                    <li><a href="javascript:void(0);" class=" waves-effect waves-block">Action</a></li>
+                                    <li><a href="javascript:void(0);" class=" waves-effect waves-block">Another action</a></li>
+                                    <li><a href="javascript:void(0);" class=" waves-effect waves-block">Something else here</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="body">
+                        <div class="row clearfix">
+                            <div class="col-sm-4 mt-3">
+                                <!-- input to carry id -->
+                                <input type="hidden" id="propertyid" name="properyid" value="{% url 'edit_adminproperty' property_id=adminproperty.id %}">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Property Name" name="propertyname"  value="{{ adminproperty.title }}" id="propertyname">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                  <select class="form-control show-tick" placeholder="Property County" name="propertycounty" id="id_countyupdate">
+                                    <option value="{{ adminproperty.location.county.id }}">{{ adminproperty.location.county.county_name }}</option>
+                                    {% for county in counties %}
+                                        {% if county.id != adminproperty.location.county.id %}
+                                        <option value="{{ county.id }}" {% if county.id == old_propertycounty %}selected{% endif %}>{{ county.county_name}}</option>
+                                       {% endif %}
+                                    {% endfor %}
+                                    <!-- Add more options as needed -->
+                                  </select>
+                                </div>
+                             </div>
+                              
+                            <div class="col-sm-4">
+                                <div class="form-group "id="id_locationupdate">
+                                    <select class="form-control show-tick" placeholder="Property Location" name="propertylocation" id="propertylocation">
+                                    <option value="{{  adminproperty.location.id }}">{{  adminproperty.location.location_name }}</option>
+                                   
+                                        <!-- Add more options as needed -->
+                                      </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <textarea rows="4" class="form-control no-resize" placeholder="Property Description" name="propertydescription" id="propertydescription" >{{ adminproperty.description }}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="header">
+                        <h2><strong>Property</strong> For <small>Description text here...</small> </h2>
+                        <ul class="header-dropdown m-r--5">
+                            <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="zmdi zmdi-more-vert"></i></a>
+                                <ul class="dropdown-menu pull-right">
+                                    <li><a href="javascript:void(0);" class=" waves-effect waves-block">Action</a></li>
+                                    <li><a href="javascript:void(0);" class=" waves-effect waves-block">Another action</a></li>
+                                    <li><a href="javascript:void(0);" class=" waves-effect waves-block">Something else here</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="body">
+                        <div class="row clearfix">
+                            <div class="col-sm-6">
+                                {% for offer in offers %}
+                                    {% if offer.offer_type|lower == adminproperty.offer_type.offer_type|lower %}
+                                        <div class="radio inlineblock m-r-25">
+                                            <input type="radio" name="radio1" id="radio{{ forloop.counter }}" value="{{ offer.id }}" checked="">
+                                            <label for="radio{{ forloop.counter }}">{{ offer.offer_type|capfirst }}</label>
+                                        </div>
+                                    {% else %}
+                                        <div class="radio inlineblock">
+                                            <input type="radio" name="radio1" id="radio{{ forloop.counter }}" value="{{ offer.id }}">
+                                            <label for="radio{{ forloop.counter }}">{{ offer.offer_type|capfirst }}</label>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="number" value="{{ adminproperty.price }}"class="form-control" name="propertyprice" id="propertyprice" placeholder="Price / Rent" min="0" oninput="validity.valid||(value='');">
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-lg-4 col-dm-3 col-sm-6">
+                                <div class="form-group">
+                                    <input type="number" class="form-control" value="{{ adminproperty.propertyfeature.bedrooms }}" name="propertybedrooms" id="propertybedrooms" placeholder="Bedrooms" min="0" oninput="validity.valid||(value='');">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-dm-3 col-sm-6">
+                                <div class="form-group">
+                                    <input type="number" class="form-control" value="{{ adminproperty.propertyfeature.bathrooms }}" name="propertybathrooms" id="propertybathrooms" placeholder="Bathrooms" min="0" oninput="validity.valid||(value='');">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-dm-3 col-sm-6">
+                                <div class="form-group">
+                                    <input type="number" class="form-control" value="{{ adminproperty.propertyfeature.size }}" name="propertysize" id ="propertysize" placeholder="Square ft" min="0" oninput="validity.valid||(value='');">
+                                </div>
+                            </div>
+                           
+                        </div>                        
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="header">
+                        <h2><strong>More on </strong>Property <small>Description text here...</small> </h2>
+                        <ul class="header-dropdown m-r--5">
+                            <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="zmdi zmdi-more-vert"></i></a>
+                                <ul class="dropdown-menu pull-right">
+                                    <li><a href="javascript:void(0);" class=" waves-effect waves-block">Action</a></li>
+                                    <li><a href="javascript:void(0);" class=" waves-effect waves-block">Another action</a></li>
+                                    <li><a href="javascript:void(0);" class=" waves-effect waves-block">Something else here</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <select class="form-control show-tick" name="propertytype" id="propertytype" placeholder="Property type" name="type">
+                                        <option value="{{ adminproperty.property_type.id }}">{{ adminproperty.property_type.property_type }}</option>
+                                        {% for type in property_type %}
+                                            {% if type.id != adminproperty.property_type.id %}
+                                                <option value="{{ type.id }}" {% if type.id == old_property_type_id %}selected{% endif %}>{{ type.property_type }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                        
+                                        <!-- Add more options as needed -->
+                                      </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 mt-3">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Posted by" name="postedby" value="Moses">
+                                </div>
+                            </div>
+                                                       
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="header">
+                        <h2><strong>General</strong> Amenities<small>Description text here...</small> </h2>
+                        <ul class="header-dropdown m-r--5">
+                            <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="zmdi zmdi-more-vert"></i></a>
+                                <ul class="dropdown-menu pull-right">
+                                    <li><a href="javascript:void(0);" class=" waves-effect waves-block">Action</a></li>
+                                    <li><a href="javascript:void(0);" class=" waves-effect waves-block">Another action</a></li>
+                                    <li><a href="javascript:void(0);" class=" waves-effect waves-block">Something else here</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                {% for amenity in amenities %}
+                                <div class="checkbox inlineblock m-r-20">
+                                    {% if amenity.id in property_amenities  %}
+                                    <input id="checkbox2{{ amenity.id }}" type="checkbox" value="{{ amenity.id }}"
+                                        name="propertyamenities" checked>
+                                    {% else %}
+                                    <input id="checkbox2{{ amenity.id }}" type="checkbox" value="{{ amenity.id }}"
+                                        name="propertyamenities">
+                                    {% endif %}
+                                    <label for="checkbox2{{ amenity.id }}">{{ amenity.amenities }}</label>
+                                </div>
+                            {% endfor %}
+                            
+                      
+                            </div>
+                        </div>
+                        <!-- For Main Image -->
+                <div class="card">
+                    <div class="header">
+                        <h2><strong>Main</strong> Image<small>Description text here...</small> </h2>
+                    </div>
+                    <div class="body">
+                            <div class="row clearfix">                            
+                                <div class="col-sm-4">
+                                    <!-- Display Main Image -->
+                                    <div class="image-container">
+                                        <img src="{{ adminproperty.main_image.url }}" alt="Main Property Image">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row clearfix">                            
+                                <div class="col-sm-4">
+                                    <div id="mainimageupdate" class="dropzone m-b-15 m-t-15" data-url="{% url 'edit_adminproperty' property_id=adminproperty.id %}"  data-fieldname="mainimage">
+                                        
+                                        <div class="dz-message">
+                                            <div class="drag-icon-cph"> <i class="material-icons">touch_app</i> </div>
+                                            <h3>Drop file here or click to upload Main Image.</h3>
+                                            <em>(Leave it blank if  <strong>do not want</strong> to replace main image.)</em>
+                                        </div>
+                                        <div class="fallback">
+                                            <input name="mainimage" type="file" />
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="card">
+                <!-- For Additional Images -->
+                    <div class="header">
+                        <h2><strong>Other</strong> Images<small>Description text here...</small> </h2>
+                    </div>
+                    <div class="body">
+                            <div class="row clearfix">  
+                                                     
+                                {% for image in more_images %}
+                                <div class="col-sm-4">
+                                    <div class="image-containermore">
+                                        <img src="{{ image.image.url }}" alt="Additional Property Image" class="image-preview">
+                                        <div class="image-actions">
+                                            <button class="remove-image" data-image-id="{{ image.id }}" data-url="{% url 'delete_more_image' image_id=image.id %}">×</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% if forloop.counter|divisibleby:3 and not forloop.last %}
+                                    </div><div class="row clearfix">
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                             <!-- For Additional Images -->
+                             <div class="row clearfix">                            
+                                <div class="col-sm-12">
+                                    <div id="moreimagesupload" class="dropzone m-b-15 m-t-15" data-url="{% url 'edit_adminproperty' property_id=adminproperty.id %}"  data-fieldname="moreimages">
+                                        <div class="dz-message">
+                                            <div class="drag-icon-cph"> <i class="material-icons">touch_app</i> </div>
+                                            <h3>Drop additional images here or click to upload.</h3>
+                                            <em>(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</em>
+                                        </div>
+                                        <div class="fallback">
+                                            <input name="moreimages" type="file" multiple />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+
+                            <div class="col-sm-12">
+                                <button type="submit" class="btn btn-primary btn-round" id="submitbtn">Submit</button>
+                                <!-- <button type="submit" class="btn btn-default btn-round btn-simple">Cancel</button> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+     </div>
+    </div>
+</section>
+
+{% endblock %}

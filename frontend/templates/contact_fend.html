@@ -1,0 +1,64 @@
+{% extends 'layout.html' %} 
+
+<!-- load the static files -->
+{% load static %}
+   {% block bodysection %}
+
+    <!-- Inner page heading start from here -->
+    <section id="at-inner-title-sec">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="at-inner-title-box">
+                        <h2>Contact Us</h2>
+                        <p>{% include 'components/homeurl.html' %} <a href="#">Contact</a>
+                        </p>
+                    </div>
+                </div>
+                <!-- <div class="col-md-6 col-sm-6">
+                    <img src="images/title.png" alt="">
+                </div> -->
+            </div>
+        </div>
+    </section>
+    <!-- Inner page heading end -->
+
+    <!-- Contact Start from here -->
+    <section class="at-contact-sec">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="at-contact-form at-col-default-mar">
+                        <div id="form-messages"></div>
+                        <form class="contact_form" method="post" data-url = "{% url 'savecontactmessage'%}" action="" data-type = 'generalcontact'>
+                            {% csrf_token %}
+                            <input type="text" class="form-control" id="customername" name="name" placeholder="Your Name" required>
+                            <input type="email" class="form-control" id="customeremail" name="email" placeholder="Email" required>
+                            <input type="number" class="form-control" id="customernumber" name="phone" placeholder="Number" min="0" oninput="validity.valid||(value='');"required>
+                            <textarea class="form-control" id="customermessage" name="message" rows="5" placeholder="Message" required></textarea>
+                            <button class="btn btn-default hvr-bounce-to-right" type="submit">Sent Message</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="at-info-box at-col-default-mar">
+                        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                        <p>info@estateapp.co.ke</p>
+                    </div>
+                    <div class="at-info-box at-col-default-mar">
+                        <i class="fa fa-phone" aria-hidden="true"></i>
+                        <p>+254792126894 </p>
+                    </div>
+                    <div class="at-info-box at-col-default-mar">
+                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                        <p>Nairobi.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--  Contact end-->
+
+    <div id="googleMap" style="width:100%; height:400px;"></div>
+
+   {% endblock %}

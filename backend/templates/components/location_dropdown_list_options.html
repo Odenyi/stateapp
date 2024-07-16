@@ -1,0 +1,6 @@
+<select class="form-control show-tick mt-3" placeholder="Property Location" name="propertylocation" id="propertylocation">
+<option value="">Select Property Location</option>
+{% for location in locations %}
+<option value="{{ location.pk }}" class="show-tick">{{ location.location_name }}</option>
+{% endfor %}
+</select>

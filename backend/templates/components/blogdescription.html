@@ -1,0 +1,5 @@
+{%  if blog.description|length > 40 %}
+    <p>{{ blog.description|slice:":40" }}...</p>
+    {% else %}
+    <p>{{ blog.description}}</p>
+{% endif %}

@@ -1,0 +1,92 @@
+<!-- Main Search start from here -->
+<section class="main-search-field mt10">
+    <form action="" method="get">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6">
+                <div class="at-col-default-mar">
+                    <select name="location">
+                        <option value="" >Location</option>
+                        {% for location_name in location_names %}
+                        <option value="{{ location_name.location_name }}"{% if location ==  location_name.location_name  %}selected{% endif %}>{{ location_name.location_name }}</option>
+                        {% endfor %}
+                       
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="at-col-default-mar">
+                    <select class="div-toggle" data-target=".my-info-1"name="propertytype">
+                        <option value="" data-show=".acitveon">Property Status</option>
+                        {% for property_type in property_types %}
+                        <option value="{{ property_type.property_type }}"{% if propertytype ==  property_type.property_type %}selected{% endif %} data-show=".acitveon" >{{ property_type.property_type }}</option>
+                        {% endfor %}
+                    
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="at-col-default-mar">
+                    <input class="at-input" type="number" name="min-area" placeholder="Squre Fit Min" value="{{ min_area }}" min="0" oninput="validity.valid||(value='');">
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="at-col-default-mar">
+                    <input class="at-input" type="number" name="max-area" placeholder="Squre Fit Max" value="{{ max_area }}" min="0" oninput="validity.valid||(value='');">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="at-col-default-mar">
+                    <div class="wrapper">
+                        <p>Price Range</p>
+                        <div class="price-input mb-2">
+                        <div class="field">
+                            <span>Min</span>
+                            <input type="number" class="input-min" value="{{ min_price }}" name="min_price" min="0" oninput="validity.valid||(value='');">
+                        </div>
+                        <div class="separator ">-</div>
+                        <div class="field">
+                            <span>Max</span>
+                            <input type="number" class="input-max" value="{{ max_price }}" name="max_price" min="0" oninput="validity.valid||(value='');">
+                        </div>
+                        </div>
+                        <div class="slider">
+                        <div class="progress"></div>
+                        </div>
+                        <div class="range-input">
+                        <input type="range" class="range-min" min="0" max="{{ maxpriceproperty }}" value="{{ minpriceproperty }}" step="100">
+                        <input type="range" class="range-max" min="0" max="{{ maxpriceproperty }}" value="{{ maxpriceproperty }}" step="100">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-2 col-md-6">
+                <div class="at-col-default-mar">
+                    <input class="at-input" type="number" name="bedrooms" placeholder="bedrooms" value="{{ bedrooms }}" min="0" oninput="validity.valid||(value='');">
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-6">
+                <div class="at-col-default-mar">
+                    <input class="at-input" type="number" name="bathrooms" placeholder="bathrooms" value="{{ bathrooms}}"  min="0" oninput="validity.valid||(value='');">
+                </div>
+            </div>
+           
+            <div class="col-lg-2 col-md-6">
+                <div class="at-col-default-mar">
+                    <a href="javascript:void(0)" id="clear-filter" class="btn btn-default hvr-bounce btn-secondary">Clear Filter</a>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-6">
+                <div class="at-col-default-mar">
+                    <button class="btn btn-default hvr-bounce-to-right" type="submit">Search</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+  </form>
+</section>
+<!-- Main Search End -->

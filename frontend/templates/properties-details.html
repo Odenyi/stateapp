@@ -1,0 +1,210 @@
+{% extends 'layout.html' %} 
+
+<!-- load the static files -->
+{% load static %}
+   {% block bodysection %}
+
+    <!-- Inner page heading start from here -->
+    <section id="at-inner-title-sec">
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="at-inner-title-box">
+                        <h2>PROPERTIES DETAILS</h2>
+                        <p>{% include 'components/homeurl.html' %} <a href="{% url 'properties'%}">Properties</a>
+                        </p>
+                    </div>
+                </div>
+                <!-- <div class="col-md-6 col-sm-6">
+                    <img src="{% static 'images/title.png' %}" alt="">
+                </div> -->
+            </div>
+        </div>
+    </section>
+    <!-- Inner page heading end -->
+   
+    <!-- Property start from here -->
+    <section class="at-property-sec at-property-right-sidebar">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="at-property-details-col">
+                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                            <!-- Wrapper for slides -->
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <img src="{{ property.main_image.url }}" alt="">
+                                    <div class="carousel-caption">
+                                        <h2>{{ property.title }}</h2>
+                                    </div>
+                                </div>
+                                <!-- End Item -->
+                                {% for image in more_images%}
+                                <div class="carousel-item">
+                                    <img src="{{ image.image.url }}" alt="">
+                                    <div class="carousel-caption">
+                                        <h2>{{ property.title }}</h2>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                              
+                            </div>
+                            <!-- End Carousel Inner -->
+                            <ul class="nav nav-pills nav-justified">
+                                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active">
+                                    <a href="javascript:void(0);"><img src="{{ property.main_image.url }}" alt="">
+                                    </a>
+                                </li>
+                                {% for image in more_images%}
+                                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active">
+                                    <a href="javascript:void(0);"><img src="{{ image.image.url }}" alt="">
+                                    </a>
+                                </li>
+                                {% endfor %}
+                              
+                            </ul>
+                        </div>
+                        <!-- End Carousel -->
+                        <p>{{ property.description  }} </p>
+                        <div class="at-sec-title at-sec-title-left">
+                            <h2>Property <span>Features</span></h2>
+                            <div class="at-heading-under-line">
+                                <div class="at-heading-inside-line"></div>
+                            </div>
+                            <p>Our properties boast a variety of outstanding features, catering to diverse needs and preferences. From well-maintained gardens and top-notch security systems to stylish, modern interiors with premium finishes, our properties are designed to offer a comfortable and luxurious living experience.</p>
+                        </div>
+                        <div class="row at-property-features">
+                            <div class="col-md-6 clearfix">
+                                <ul>
+                                    <li>Property ID : <span class="pull-right">VWL{{ property.id }}</span>
+                                    </li>
+                                    <li>Full Area : <span class="pull-right">{{ property.propertyfeature.size }} sqft</span>
+                                    </li>
+                                    <li>Bedrooms : <span class="pull-right">{{ property.propertyfeature.bedrooms }}</span>
+                                    </li>
+                                    <li>Bathrooms : <span class="pull-right">{{ property.propertyfeature.bathrooms }}</span>
+                                    </li>
+                                    <li>Status : <span class="pull-right"> 
+                                        {% if property.offer_type.offer_type|lower == "sale" or property.offer_type.offer_type|lower == "rent" %}
+                                                For {{ property.offer_type.offer_type }} 
+                                        {% else %}
+
+                                        {{ property.offer_type.offer_type }} 
+
+                                        {% endif %}
+                                         </span>
+                                    </li>
+                                    <li>Property Type : <span class="pull-right">{{ property.property_type.property_type }}</span>
+                                    </li>
+                                    <li>Location : <span class="pull-right">{{ property.location.location_name }}</span>
+                                    </li>
+                                    <li>County : <span class="pull-right">{{ property.location.county.county_name }}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul>
+                                    
+                                    {% for amenity in property_amenities %}
+                                    <li>{{ amenity.amenities.amenities }} : <span class="pull-right">Yes</span>
+                                    </li>
+                                    {% endfor %}
+                                   
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="at-comment-row">
+                                    <h3><a href="#">SHOW INTEREST</a></h3>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                        <div class="at-form-area">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <form class="contact_form" action="" data-url = "{% url 'showinterest' property.id %}" method="post" data-type = "{% url 'property_detail' property.id %}">
+                                        <div class="row">
+                                            {% csrf_token %}
+                                            <div class="col-md-6 col-sm-6">
+                                                <input class="form-control" type="text" name="name" id="customername" placeholder="Your name">
+                                            </div>
+                                            <div class="col-md-6 col-sm-6">
+                                                <input class="form-control" type="email" name="email" id="customeremail" placeholder="Email" required>
+                                            </div>
+                                            <div class="col-md-12 col-sm-12">
+                                                <input class="form-control" type="number" name="phone" id="customernumber" placeholder="Number" min="0" oninput="validity.valid||(value='');" required>
+                                            </div>
+                                            <div class="col-md-12 col-sm-12">
+                                                <textarea class="form-control" name="message" rows="5" id="customermessage" placeholder="Write message here"></textarea>
+                                                <button class="btn btn-default hvr-bounce-to-right" type="submit" id="contact_formbtn">SUBMIT</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="at-sidebar at-col-default-mar">
+                        <div class="at-sidebar-search at-sidebar-mar">
+                            <form method="post">
+                                <div class="input-group">
+                                    <input placeholder="Search Here....." class="form-control" name="search-field" type="text">
+                                    <span class="input-group-btn">
+                                  <button type="submit" class="btn"><i class="fa fa-search"></i></button>
+                                  </span>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="at-categories clearfix">
+                            <h3 class="at-sedebar-title">categories</h3>
+                            <ul>
+                               {% include 'components/property_typecount.html' %}
+                              
+                            </ul>
+                        </div>
+                        <div class="at-latest-news">
+                            <h3 class="at-sedebar-title">Related Properties</h3>
+                            <ul>
+                                <!-- to  make it dynamic display using rand always show limit 3 but should should show random properties -->
+                                {% for random_property in random_related_properties %}
+                                <li>
+                                    
+                                <div class="at-news-item">
+                                    <img src="{{ random_property.main_image.url }}" alt="">
+                                    <h4><a href="{% url 'property_detail' random_property.id %}">{{ random_property.title }}</a></h4>
+                                    {%  if random_property.description|length > 30 %}
+                                    <p>{{ random_property.description|slice:":30" }}...</p>
+                    
+                                    {% else %}
+                                    <p class="text-muted m-b-0">{{ random_property.description }}</p>
+                                    {% endif %}
+                                </div>
+
+                                </li>
+                                {% endfor %}
+                               
+                            </ul>
+                        </div>
+                        <div class="at-sidebar-tags">
+                            {% for amenity in property_amenities %}                                  
+                            <a href="javascript:void(0);">{{ amenity.amenities.amenities }}</a>
+                            {% endfor %}
+                           
+                        </div>
+                        <div class="at-preview">
+                            <h3 class="at-sedebar-title">preview</h3>
+                            <img src="{% static 'images/property/preview.jpg' %}" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Property End -->
+{% endblock %}
+   

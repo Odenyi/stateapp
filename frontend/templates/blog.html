@@ -1,0 +1,66 @@
+{% extends 'layout.html' %} 
+
+<!-- load the static files -->
+{% load static %}
+   {% block bodysection %}
+      
+
+    <!-- Inner page heading start from here -->
+    <section id="at-inner-title-sec">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="at-inner-title-box">
+                        <h2>Our Blog</h2>
+                        <p><a href="index-one.html">Home</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="#">Blog</a>
+                        </p>
+                    </div>
+                </div>
+                <!-- <div class="col-md-6 col-sm-6">
+                    <img src="images/title.png" alt="">
+                </div> -->
+            </div>
+        </div>
+    </section>
+    <!-- Inner page heading end -->
+
+    <!-- Blog start from here -->
+    <section class="at-blog-sec">
+        <div class="container">
+            <div class="row">
+                {% if properties %}
+                {% for blog in properties %}
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="at-blog-box at-col-default-mar">
+                            <div class="at-blog-img">
+                                <img src="{{ blog.image.url }}" alt="">
+                                <div class="at-blog-date">
+                                    <ul>
+                                       {% include 'components/blogicons.html' %}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="at-blog-content">
+                                <h4><a href="{% url 'blog-details' blog.id %}">{{ blog.title }}</a></h4>
+                                {% include 'components/blogdiscriptionslice.html' %}
+                                <a class="btn btn-default hvr-bounce-to-right" href="{% url 'blog-details' blog.id %}" role="button">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}  
+                {% else %}
+                <div class="alert alert-warning">
+                    <p style="text-align: center;"><strong>Sorry, no blogs found.</strong></p>
+                </div>
+                {% endif %}
+            </div>
+            <div class="col-md-12 col-sm-12 text-center">
+                {% include "components/paginator.html" %}
+            </div>
+        </div>
+    </section>
+    <!-- End -->
+
+{% endblock %}
+
+   

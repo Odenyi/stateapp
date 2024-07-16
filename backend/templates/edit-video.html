@@ -1,0 +1,86 @@
+{% extends 'components/layout.html'%}
+{% load static %}
+
+{% block mid_section%}
+<!-- main body -->
+
+<section class="content video-page">
+    <div class="block-header">
+        <div class="row">
+            <div class="col-lg-7 col-md-6 col-sm-12">
+                <h2>Edit Post
+                    <small>Welcome to Estate App</small>
+                </h2>
+            </div>
+            <div class="col-lg-5 col-md-6 col-sm-12">
+                <ul class="breadcrumb float-md-right">
+                    <li class="breadcrumb-item"><a href="index.html"><i class="zmdi zmdi-home"></i> Estate App</a></li>
+                    <li class="breadcrumb-item"><a href="video-dashboard.html">video</a></li>
+                    <li class="breadcrumb-item active">Update video</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+    <form  id="updatevideofrm"  enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="body">
+                        <div class="form-group">
+                            <input type="text" class="form-control" value = "{{ video.title }}" name="videotitle" id="videotitle" />
+                        </div>
+                        
+                        <select class="form-control show-tick" name="videotype" id="videotype">
+                                                      
+                            <option value="{{ video.property_type.id }}">{{ video.property_type.property_type }}</option>
+                            {% for type in property_type %}
+                                {% if type.id != video.property_type.id %}
+                                    <option value="{{ type.id }}" {% if type.id == old_property_type_id %}selected{% endif %}>{{ type.property_type }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                       
+                        <div class="row clearfix">                            
+                            <div class="col-sm-4">
+                                <!-- Display Main Image -->
+                                <div class="image-container">
+                                    <video width="240" height="180">
+                                        <source src="{{ video.video.url }}" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row clearfix">                            
+                           <div class="col-sm-4">
+                                <div id="videoupdate" class="dropzone m-b-20 m-t-20" method="post" data-url="{% url 'edit_video' video_id=video.id %}  data-fieldname="videoedit" >
+                                    <div class="dz-message">
+                                        <div class="drag-icon-cph"> <i class="material-icons">touch_app</i> </div>
+                                        <h3>Drop files here or click to upload.</h3>
+                                        <em>(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</em> </div>
+                                    <div class="fallback">
+                                        <input name="file" type="file" multiple />
+                                    </div>
+                                </div>  
+                            </div>
+                        </div>     
+                        
+                       
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="body">
+                        
+                        <button type="submit" class="btn btn-primary btn-round waves-effect m-t-20">Update</button>
+                    </div>
+                </div>
+            </div>            
+        </div>
+    </form>
+    </div>
+</section>
+
+{% endblock %}

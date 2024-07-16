@@ -1,0 +1,122 @@
+{% extends 'components/layout.html'%}
+{% load static %}
+{% load tz %}
+
+{% block mid_section%}
+<!-- main section -->
+<section class="content inbox">
+    <div class="block-header">
+        <div class="row">
+            <div class="col-lg-7 col-md-6 col-sm-12">
+                <h2>Inbox
+                <small class="text-muted">Welcome to Estate App</small>
+                </h2>
+            </div>
+            <div class="col-lg-5 col-md-6 col-sm-12">
+                <ul class="breadcrumb float-md-right">
+                    <li class="breadcrumb-item"><a href="index.html"><i class="zmdi zmdi-home"></i> Estate App</a></li>
+                    <li class="breadcrumb-item active">Inbox</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row clearfix">
+            <div class="col-lg-12">
+                <div class="card action_bar">
+                    <div class="body">
+                        <div class="row clearfix">
+                            <div class="col-lg-1 col-md-2 col-3">
+                                <div class="checkbox inlineblock delete_all">
+                                    <input id="deleteall" type="checkbox">
+                                    <label for="deleteall">
+                                        All
+                                    </label>
+                                </div>                                
+                            </div>
+                            <div class="col-lg-5 col-md-4 col-6">
+                                <div class="input-group search">
+                                    <input type="text" class="form-control" placeholder="Search...">
+                                    <span class="input-group-addon">
+                                        <i class="zmdi zmdi-search"></i>
+                                    </span>
+                                </div>
+                            </div>                            
+                            <div class="col-lg-6 col-md-6 col-3">
+                                <div class="btn-group hidden-sm-down">
+                                    <div class="btn-group">
+                                        
+                                    </div>
+                                </div>
+                              
+                                <div class="btn-group hidden-sm-down">
+                                    <button type="button" class="btn btn-simple btn-warning dropdown-toggle btn-round" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More<span class="caret"></span> </button>
+                                    <ul class="dropdown-menu dropdown-menu-right slideDown">
+                                        <li><a href="javascript:void(0);">All</a></li>
+                                        <li><a href="javascript:void(0);">General Messages</a></li>
+                                        <li><a href="javascript:void(0);">Blog Messages</a></li>
+                                        <li><a href="javascript:void(0);">Property Messages</a></li>
+                                       
+                                        
+                                    </ul>
+                                </div>
+                              
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>           
+        </div>        
+        <div class="row clearfix">
+            <div class="col-md-12 col-lg-12 col-xl-12">
+                <ul class="mail_list list-group list-unstyled">
+                {% for message in messagesp %}
+                    <li class="list-group-item">
+                        <div class="media">
+                            <div class="pull-left">                                
+                                <div class="controls">
+                                    <div class="checkbox">
+                                        <input type="checkbox" id="basic_checkbox_1{{ message.id }}">
+                                        <label for="basic_checkbox_1{{ message.id }}"></label>
+                                    </div>
+                                    <a href="javascript:void(0);" class="favourite text-muted hidden-sm-down" data-toggle="active"><i class="zmdi zmdi-star-outline"></i></a>
+                                </div>
+                                <div class="thumb hidden-sm-down m-r-20"> <img src="assets/images/xs/avatar1.jpg" class="rounded-circle" alt=""> </div>
+                            </div>
+                            <div class="media-body">
+                                <div class="media-heading">
+                                    <a href="javascript:void(0);" class="m-r-10">{{ message.username }}</a>
+                                    {% if not message.message_type %}
+                                    <span class="badge bg-blue">Property message</span>
+                                
+                                    {% elif message.message_type == 'blog' %}
+                                    <span class="badge bg-orange">Blog message</span>
+                                    {% else %}
+                                    <span class="badge bg-green">General message</span>
+                                    {% endif %}
+                                    <small class="float-right text-muted"><time class="hidden-sm-down" datetime="2017">{{ message.created_at|timezone:"Africa/Nairobi" }}</time><i class="zmdi zmdi-attachment-alt"></i> </small>
+                                </div>
+                                {% if not message.message_type %}
+                                <p class="msg">{% if message.message == "" %}I'm highly interested in the property <a href="{% url 'view_adminproperty' message.property_id %}">here</a> and would like to schedule a viewing. {% else %} {{ message.message }}.<a href="{% url 'view_adminproperty' message.property_id %}">here</a> {% endif %}  Contact: <span class="badge bg-orange">{{ message.phone }}</span> Email:<span class="badge bg-green">{{ message.email }}</span></p>
+                                {% elif message.message_type == 'blog' %}
+                                <p class="msg">{% if message.message == "" %}You have received an interest on this blog<a href="{% url 'adminblog-details' message.blog_id %}">here</a>  {% else %} {{ message.message }}<a href="{% url 'adminblog-details' message.blog_id %}">here</a> {% endif %}</p>
+                                {% else %}
+                                <p class="msg">{% if message.message == "" %}This is a general message {% else %} {{ message.message }}{% endif %}. Contact: <span class="badge bg-orange">{{ message.phone }}</span> Email:<span class="badge bg-green">{{ message.email }}</span></p>
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+                  
+                </ul>
+                <div class="card m-t-5">
+                    <div class="body">
+                        {% include 'components/messagepagination.html' %}  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

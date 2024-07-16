@@ -1,0 +1,35 @@
+﻿{% extends 'components/layout.html'%}
+{% load static %}
+
+{% block mid_section%}
+
+<!-- Main Content -->
+<section class="content home">
+    <div class="block-header">
+        <div class="row">
+            <div class="col-lg-7 col-md-6 col-sm-12">
+                <h2>Apartment list
+                <small class="text-muted">Welcome to Compass</small>
+                </h2>
+            </div>
+            <div class="col-lg-5 col-md-6 col-sm-12">                
+                <button class="btn btn-primary btn-icon btn-round hidden-sm-down float-right m-l-10" type="button">
+                    <i class="zmdi zmdi-plus"></i>
+                </button>
+                <ul class="breadcrumb float-md-right">
+                    <li class="breadcrumb-item"><a href="index.html"><i class="zmdi zmdi-home"></i> Compass</a></li>
+                    <li class="breadcrumb-item"><a href="javascript:void(0);">Types</a></li>
+                    <li class="breadcrumb-item active">List</li>
+                </ul>                
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">        
+        <div class="row clearfix">
+          <!-- add card component -->
+          {% include "components/listproperties3.html" %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'components/layout.html'%}
+{% load static %}
+
+{% block mid_section%}
+{% load tz %}
+<section class="content home">
+    <div class="block-header">
+        <div class="row">
+            <div class="col-lg-7 col-md-6 col-sm-12">
+                <h2>Video
+                <small class="text-muted">Welcome to Estate App</small>
+                </h2>
+            </div>
+            <div class="col-lg-5 col-md-6 col-sm-12">                
+                <a href="{% url 'user_list' %}" class="btn btn-primary btn-icon btn-round hidden-sm-down float-right m-l-10" style="display: flex; align-items: center; justify-content: center;">
+                    <i class="zmdi zmdi-plus"></i>
+                </a>
+                <ul class="breadcrumb float-md-right">
+                    {% include  'components/homelink.html' %}
+                    <li class="breadcrumb-item"><a href="javascript:void(0);">Users</a></li>
+                    <li class="breadcrumb-item active">List</li>
+                </ul>                
+            </div>
+        </div>
+    </div>
+    
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Video</th>
+                <th>Property Type</th>
+                <th>Title</th>
+                <th>Created At</th>
+                <th>Updated At</th>
+                <th>Posted By</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for video in videos %}
+                <tr>
+                    <td>
+                        <video width="240" height="180" controls>
+                            <source src="{{ video.video.url }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </td>
+                    <td>{{ video.property_type }}</td>
+                    <td>{{ video.title }}</td>
+                    <td>{{ video.created_at }}</td>
+                    <td>{{ video.updated_at }}</td>
+                    <td>{{ video.posted_by }}</td>
+                    <td>
+                        <a href="{% url 'edit_video' video.id %}" class="btn btn-primary">Edit</a>
+                        <a href="javascript:void(0);" class="btn btn-danger deletevideo" data-delvideo="{% url 'delete_video' video.id %}" >Delete</a>
+                       
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</section>
+
+{% endblock %}

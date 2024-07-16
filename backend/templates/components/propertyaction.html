@@ -1,0 +1,9 @@
+<div class="property-action m-t-15">
+    <a href="#" title="Square Feet"><i class="zmdi zmdi-view-dashboard"></i><span>{{ property.propertyfeature.size}} </span></a>
+    <a href="#" title="Bedroom"><i class="zmdi zmdi-hotel"></i><span>{{ property.propertyfeature.bedrooms }}</span></a>
+    <a href="#" title="Bathrooms"><i class="fa-solid fa-bath"></i><span>{{ property.propertyfeature.bathrooms }}</span></a>
+    <a href="#" title="Garages"><i class="zmdi zmdi-home"></i><span>24H</span></a>
+    <a href="{% url 'edit_adminproperty' property.id %}" title="Edit"><i class="zmdi zmdi-edit"></i></a>
+    <a href="{% url 'view_adminproperty' property.id %}" title="View"><i class="zmdi zmdi-eye"></i></a>
+    <a href="javascript:void(0)" class="remove-property" data-id="deleteview1" data-url="{% url 'delete_adminproperty' property.id %}" data-name="{{ property.title }}" title="Delete"><i class="zmdi zmdi-delete"></i></a>
+</div>

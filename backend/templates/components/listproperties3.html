@@ -1,0 +1,32 @@
+{% load humanize %}
+{% for property in properties%}
+            
+<div class="col-lg-4 col-md-12">
+    <div class="card property_list view_property">
+        <div class="property_image">
+            <img class="img-thumbnail img-fluid" src="{{ property.main_image.url }}" alt="{{ property.title }}">
+            {% if property.offer_type.offer_type|lower == "sale" or property.offer_type.offer_type|lower == "rent" %}
+            <span class="badge {% if property.offer_type.offer_type|lower == 'sale' %}badge-success{% else %}badge-info{% endif %}">For {{ property.offer_type.offer_type }}</span>
+            {% else %}
+            <span class="badge badge {% if property.offer_type.offer_type|lower == 'sold' %}badge-danger{% else %}badge-warning{% endif %}">{{ property.offer_type.offer_type }}</span>
+            {% endif %}
+        </div>
+        <div class="body">
+            <div class="property-content">
+                <div class="detail">
+                    <h5 class="text-success m-t-0 m-b-0">KSH {{ property.price|intcomma }}</h5>
+                    <h4 class="m-t-0"><a href="#" class="col-blue-grey">{{ property.title }}</a></h4>
+                    <p class="text-muted"><i class="zmdi zmdi-pin m-r-5"></i>{{ property.location.location_name }},{{ property.location.county.county_name}}</p>
+                    {%  if property.description|length > 100 %}
+                    <p class="text-muted m-b-0">{{ property.description|slice:":100" }}...</p>
+                    {% else %}
+                    <p class="text-muted m-b-0">{{ property.description }}</p>
+                    {% endif %}
+                </div>
+                {% include 'components/propertyaction.html'%}
+            </div>
+        </div>
+    </div>
+    
+</div>
+{% endfor %}
